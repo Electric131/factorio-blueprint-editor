@@ -1,5 +1,5 @@
 from blueprint_editing import decode, encode
-from json import load
+from json import load, loads
 
 itemName = input("Train Item: ")
 trainColor = input("Train Color(optional): ")
@@ -20,13 +20,19 @@ else:
     wagonType = "cargo"
 
 itemSymbol = f"[{itemType}={itemName}]"
+wagonSymbol = f"[item={wagonType}-wagon]"
+formattedItem = " ".join(itemName.split("-")).title()
 
-print(f"Type Recognized: '{itemName}' is type {itemType} and is stored in a {wagonType} wagon")
+print(f"'{itemName}' is type {itemType} and is stored in a {wagonType} wagon\n\n")
 
 schedule = str(config["schedule_format"])
-replace = {"<item_name>": itemName, "<item_symbol>": itemSymbol, "<wagon_type>": wagonType}
+label = config["blueprint_label"]
+replace = {"<item_name>": itemName, "<item_symbol>": itemSymbol, "<wagon_type>": wagonType, "<item_type>": itemType, "<wagon_symbol>": wagonSymbol, "<item_titled>": formattedItem}
 for replaceA, replaceB in replace.items():
     schedule = schedule.replace(replaceA, replaceB)
+    label = label.replace(replaceA, replaceB)
+
+schedule = loads(schedule.replace("'", '"'))
 
 entityCount = 0
 entities = []
@@ -35,15 +41,13 @@ filterList = [{"index": i + 1, "name": itemName} for i in range(40)]
 
 for i in range(config["locomotive_count"]):
     entityCount += 1
-    entityData = {'entity_number': entityCount, 'name': 'locomotive', 'position': {'x': 0, 'y': ((entityCount - 1) * 6)}, 'orientation': 0, 'color': {'r': color[0]/255, 'g': color[1]/255, 'b': color[2]/255, 'a': 0.5}, 'items': {config["fuel"]: config["fuel_amount"]}}
+    entityData = {'entity_number': entityCount, 'name': 'locomotive', 'position': {'x': 0, 'y': ((entityCount - 1) * 7)}, 'orientation': 0, 'color': {'r': color[0]/255, 'g': color[1]/255, 'b': color[2]/255, 'a': 0.5}, 'items': {config["fuel"]: config["fuel_amount"]}}
     entities.append(entityData)
 
 for i in range(config["wagon_count"]):
     entityCount += 1
-    entityData = {'entity_number': entityCount, 'name': f'{wagonType}-wagon', 'position': {'x': 0, 'y': ((entityCount - 1) * 6)}, 'orientation': 0, "inventory": {"filters": filterList}}
+    entityData = {'entity_number': entityCount, 'name': f'{wagonType}-wagon', 'position': {'x': 0, 'y': ((entityCount - 1) * 7)}, 'orientation': 0, "inventory": {"filters": filterList}}
     entities.append(entityData)
-
-print(entities)
 
 blueprintData = {
     "icons":[
@@ -62,5 +66,21 @@ blueprintData = {
             },
             "index": 2
         }
-    ]
+    ],
+    "entities": entities,
+    "schedules": [
+        {
+            "locomotives": [i + 1 for i in range(config["locomotive_count"])],
+            "schedule": schedule
+        }
+    ],
+    "item": "blueprint",
+    "label": label,
+    "version": config["game-version"]
 }
+
+blueprint = {"blueprint": blueprintData}
+
+print(blueprint)
+
+print(f"\nFinished Operation:\n\n{encode(blueprint)}")

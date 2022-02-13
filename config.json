@@ -12,11 +12,11 @@
                 {"compare_type": "or",
                     "type": "full"},
                 {"compare_type": "or",
-                    "type": "<wagon_type>_count",
+                    "type": "<item_type>_count",
                     "condition": 
                     {
                         "first_signal": {
-                            "type": "<wagon_type>", "name": "<item_name>"
+                            "type": "<item_type>", "name": "<item_name>"
                         },
                         "constant": 0, "comparator": ">"
                     }
@@ -37,14 +37,10 @@
         "water",
         "oil"
     ],
-    "blueprint_name_replace": {
-        "iron": "Iron Ore",
-        "copper": "Copper Ore",
-        "plastic": "Plastic Bars"
-    },
     "fuel": "coal",
     "fuel_amount": 50,
-    "locomotive_count": 1,
+    "locomotive_count":1,
+    "blueprint_label": "[item=locomotive]<item_symbol> <item_titled>",
     "wagon_count": 4,
     "default_color": [40, 128, 170],
     "game-version": 281479275151360
