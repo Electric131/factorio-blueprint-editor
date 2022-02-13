@@ -1,0 +1,51 @@
+{
+    "schedule_format": [
+        {
+            "station": "[entity=tile-ghost]",
+            "wait_conditions": [
+                {"compare_type": "or", "type": "inactivity", "ticks": 60}
+            ]
+        },
+        {
+            "station": "[virtual-signal=signal-L]<item_symbol>"
+            ,"wait_conditions": [
+                {"compare_type": "or",
+                    "type": "full"},
+                {"compare_type": "or",
+                    "type": "<wagon_type>_count",
+                    "condition": 
+                    {
+                        "first_signal": {
+                            "type": "<wagon_type>", "name": "<item_name>"
+                        },
+                        "constant": 0, "comparator": ">"
+                    }
+                },
+                {"compare_type": "and", "type": "time", "ticks": 18000}
+            ]
+        },
+        {"station": "[entity=tile-ghost]"},
+        {"station": "[virtual-signal=signal-U]<item_symbol>",
+            "wait_conditions": [
+                {
+                    "compare_type": "or", "type": "empty"
+                }
+            ]
+        }
+    ],
+    "fluid_types": [
+        "water",
+        "oil"
+    ],
+    "blueprint_name_replace": {
+        "iron": "Iron Ore",
+        "copper": "Copper Ore",
+        "plastic": "Plastic Bars"
+    },
+    "fuel": "coal",
+    "fuel_amount": 50,
+    "locomotive_count": 1,
+    "wagon_count": 4,
+    "default_color": [40, 128, 170],
+    "game-version": 281479275151360
+}
