@@ -2,10 +2,10 @@ from blueprint_editing import decode, encode
 from json import load, loads
 
 def colorFromString(config: dict, color: str):
-    if trainColor == "":
+    if color == "":
         color = config["default_color"]
     else:
-        color = trainColor.replace(" ", "").split(",")
+        color = color.replace(" ", "").split(",")
     return color
 
 def generate_train(config: dict, itemName: str, color: list):
