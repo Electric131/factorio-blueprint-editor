@@ -17,7 +17,7 @@ load_dotenv()
 token = os.getenv('TOKEN')
 
 def getTime():
-    return datetime.datetime.now.strftime("%m/%d/%Y, %H:%M:%S")
+    return datetime.datetime.now.strftime("%m/%d/%Y @%H:%M:%S")
 
 with open("config.json", "r") as f:
     config = json.load(f)

@@ -3,12 +3,12 @@
         {
             "station": "[entity=tile-ghost]",
             "wait_conditions": [
-                {"compare_type": "or", "type": "inactivity", "ticks": 60}
+                {"compare_type": "or", "type": "inactivity", "ticks": 10}
             ]
         },
         {
-            "station": "[virtual-signal=signal-L]<item_symbol>"
-            ,"wait_conditions": [
+            "station": "<item_symbol>[L]",
+            "wait_conditions": [
                 {"compare_type": "or",
                     "type": "full"},
                 {"compare_type": "or",
@@ -24,8 +24,7 @@
                 {"compare_type": "and", "type": "time", "ticks": 18000}
             ]
         },
-        {"station": "[entity=tile-ghost]"},
-        {"station": "[virtual-signal=signal-U]<item_symbol>",
+        {"station": "<item_symbol>[U]",
             "wait_conditions": [
                 {
                     "compare_type": "or", "type": "empty"
@@ -43,8 +42,8 @@
         "sulfuric-acid",
         "lubricant"
     ],
-    "fuel": "coal",
-    "fuel_amount": 50,
+    "fuel": "nuclear-fuel",
+    "fuel_amount": 3,
     "locomotive_count":1,
     "blueprint_label": "[item=locomotive]<item_symbol> <item_titled>",
     "wagon_count": 4,
